@@ -404,6 +404,10 @@ export default createStore({
     cartItemCount: state => {
       return state.cart.reduce((total, item) => total + item.quantity, 0)
     },
+    categories: state => {
+      // Get unique categories from products
+      return [...new Set(state.products.map(product => product.category))]
+    },
     isAuthenticated: state => state.isAuthenticated,
     currentUser: state => state.user,
     isAdmin: state => state.user && state.user.role === 'admin'
