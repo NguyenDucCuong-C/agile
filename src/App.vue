@@ -65,7 +65,7 @@
               <router-link to="/">Trang chủ</router-link>
               <router-link to="/products">Sản phẩm</router-link>
               <router-link to="/cart" class="cart-link">
-                Giỏ hàng
+                <i class="fas fa-shopping-cart"></i>
                 <span v-if="cartItemCount > 0" class="cart-badge">{{ cartItemCount }}</span>
               </router-link>
               <template v-if="isAuthenticated">
@@ -286,12 +286,28 @@ export default {
   position: relative;
   text-decoration: none;
   color: inherit;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.cart-link:hover {
+  background-color: #f5f5f5;
+}
+
+.cart-link i {
+  font-size: 1.3rem;
+  color: var(--text-color);
 }
 
 .cart-badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -5px;
+  right: -5px;
   background-color: #e44d26;
   color: white;
   font-size: 12px;
@@ -299,6 +315,9 @@ export default {
   border-radius: 50%;
   min-width: 18px;
   text-align: center;
+  font-weight: 600;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .user-menu {
