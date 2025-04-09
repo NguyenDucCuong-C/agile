@@ -235,18 +235,25 @@ export default createStore({
         state.toast.show = true
       }, 100)
     },
-    updateQuantity(state, { product, quantity }) {
-      const item = state.cart.find(item => item.id === product.id)
+    updateQuantity(state, { id, quantity }) {
+      const item = state.cart.find(item => item.id === id)
       if (item) {
         item.quantity = quantity
         // Lưu giỏ hàng vào localStorage
         localStorage.setItem('cart', JSON.stringify(state.cart))
       }
     },
-    removeFromCart(state, product) {
-      state.cart = state.cart.filter(item => item.id !== product.id)
+    removeFromCart(state, productId) {
+      state.cart = state.cart.filter(item => item.id !== productId)
       // Lưu giỏ hàng vào localStorage
       localStorage.setItem('cart', JSON.stringify(state.cart))
+      
+      // Hiển thị thông báo
+      state.toast = {
+        show: true,
+        message: 'Đã xóa sản phẩm khỏi giỏ hàng',
+        type: 'success'
+      }
     },
     clearCart(state) {
       state.cart = []
@@ -403,6 +410,10 @@ export default createStore({
   getters: {
     cartItemCount: state => {
       return state.cart.reduce((total, item) => total + item.quantity, 0)
+    },
+    categories: state => {
+      // Get unique categories from products
+      return [...new Set(state.products.map(product => product.category))]
     },
     isAuthenticated: state => state.isAuthenticated,
     currentUser: state => state.user,
