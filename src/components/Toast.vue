@@ -23,6 +23,10 @@ export default {
     duration: {
       type: Number,
       default: 3000
+    },
+    id: { 
+    type: Number,
+    required: true
     }
   },
   data() {
@@ -37,17 +41,23 @@ export default {
     }
   },
   watch: {
-    message: {
-      handler() {
-        this.show = true
-        if (this.duration > 0) {
-          setTimeout(() => {
-            this.close()
-          }, this.duration)
-        }
-      },
-      immediate: true
-    }
+    id: {
+    handler() {
+      this.show = true
+      this.icon = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        warning: 'fa-exclamation-triangle',
+        info: 'fa-info-circle'
+      }[this.type]
+      if (this.duration > 0) {
+        setTimeout(() => {
+          this.close()
+        }, this.duration)
+      }
+    },
+    immediate: true
+  }
   },
   methods: {
     close() {

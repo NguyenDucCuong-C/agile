@@ -1,10 +1,5 @@
 <template>
   <div class="cart">
-    <Toast 
-      :show="$store.state.toast.show"
-      :message="$store.state.toast.message"
-      :type="$store.state.toast.type"
-    />
     <div class="container">
       <h1>Giỏ hàng của bạn</h1>
       <div v-if="!cartItems.length" class="empty-cart">
@@ -52,13 +47,8 @@
 </template>
 
 <script>
-import Toast from '@/components/Toast.vue'
-
 export default {
   name: 'Cart',
-  components: {
-    Toast
-  },
   computed: {
     cartItems() {
       return this.$store.state.cart
@@ -82,10 +72,6 @@ export default {
         id: item.id,
         quantity: item.quantity + 1
       })
-      this.$store.commit('showToast', {
-        message: `Đã tăng số lượng ${item.name} lên ${item.quantity + 1}`,
-        type: 'success'
-      })
     },
     decreaseQuantity(item) {
       if (item.quantity > 1) {
@@ -93,27 +79,16 @@ export default {
           id: item.id,
           quantity: item.quantity - 1
         })
-        this.$store.commit('showToast', {
-          message: `Đã giảm số lượng ${item.name} xuống ${item.quantity - 1}`,
-          type: 'success'
-        })
       }
     },
     removeItem(item) {
       if (confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
         this.$store.commit('removeFromCart', item.id)
-        this.$store.commit('showToast', {
-          message: `Đã xóa ${item.name} khỏi giỏ hàng`,
-          type: 'success'
-        })
       }
     },
     async checkout() {
       if (!this.$store.state.isAuthenticated) {
-        this.$store.commit('showToast', {
-          message: 'Vui lòng đăng nhập để thanh toán',
-          type: 'error'
-        })
+        alert('Vui lòng đăng nhập để thanh toán')
         this.$router.push('/login')
         return
       }
@@ -133,17 +108,11 @@ export default {
 
           this.$store.commit('addOrder', order)
           this.$store.commit('clearCart')
-          this.$store.commit('showToast', {
-            message: 'Đặt hàng thành công! Cảm ơn bạn đã mua sắm.',
-            type: 'success'
-          })
+          alert('Đặt hàng thành công!')
           this.$router.push('/orders')
         } catch (error) {
           console.error('Lỗi khi đặt hàng:', error)
-          this.$store.commit('showToast', {
-            message: 'Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.',
-            type: 'error'
-          })
+          alert('Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.')
         }
       }
     }
