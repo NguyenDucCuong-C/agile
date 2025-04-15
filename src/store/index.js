@@ -43,7 +43,7 @@ export default createStore({
         image: '/images/products/ao-so-mi-ke.jpg',
         category: 'Áo sơ mi',
         size: 'L',
-        featured: false
+        featured: true
       },
       {
         id: 5,
@@ -53,7 +53,7 @@ export default createStore({
         image: '/images/products/ao-khoac-jean.jpg',
         category: 'Áo khoác',
         size: 'M',
-        featured: false
+        featured: true
       },
       {
         id: 6,
@@ -63,7 +63,7 @@ export default createStore({
         image: '/images/products/ao-khoac-bomber.jpg',
         category: 'Áo khoác',
         size: 'L',
-        featured: false
+        featured: true
       },
       {
         id: 7,
@@ -73,7 +73,7 @@ export default createStore({
         image: '/images/products/quan-jean-nam.jpg',
         category: 'Quần jean',
         size: '30',
-        featured: false
+        featured: true
       },
       {
         id: 8,
@@ -83,7 +83,7 @@ export default createStore({
         image: '/images/products/quan-jean-regular.jpg',
         category: 'Quần jean',
         size: '32',
-        featured: false
+        featured: true
       },
       {
         id: 9,
@@ -194,14 +194,16 @@ export default createStore({
         name: 'Admin',
         email: 'admin@example.com',
         password: 'admin123',
-        role: 'admin'
+        role: 'admin',
+        is_active: true
       },
       {
         id: 2,
         name: 'Nguyễn Văn A',
         email: 'test@example.com',
         password: 'password123',
-        role: 'user'
+        role: 'user',
+        is_active: true
       }
     ],
     toast: {
@@ -300,6 +302,13 @@ export default createStore({
     addUser(state, user) {
       state.users.push(user)
     },
+    updateAccountStatus(state, updatedUser) {
+      const user = state.users.find(u => u.id === updatedUser.id)
+      if (user) {
+        user.is_active = updatedUser.is_active
+      }
+    },
+    
     hideToast(state) {
       state.toast.show = false
     },
@@ -307,7 +316,15 @@ export default createStore({
       state.toast = {
         show: true,
         message,
-        type
+        type,
+        id: Date.now()
+      }
+    },
+    updateAccount(state, updatedAccount) {
+      const index = state.users.findIndex(user => user.id === updatedAccount.id);
+      if (index !== -1) {
+        // Cập nhật tài khoản trong danh sách
+        state.users.splice(index, 1, updatedAccount);
       }
     }
   },
@@ -405,7 +422,15 @@ export default createStore({
       if (user) {
         commit('setUser', JSON.parse(user))
       }
+    },
+    updateAccountStatus({ commit }, updatedUser) {
+      commit('updateAccountStatus', updatedUser)
+    },
+    updateAccount({ commit }, updatedAccount) {
+      // Thực hiện cập nhật tài khoản và sau đó commit mutation
+      commit('updateAccount', updatedAccount);
     }
+    
   },
   getters: {
     cartItemCount: state => {
