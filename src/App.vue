@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="container">
         <div class="nav-left">
-          <router-link to="/" class="logo">BlueShop</router-link>
+          <router-link to="/" class="logo">BanQuanAo</router-link>
         </div>
         <div class="nav-right">
           <!-- Search Bar -->
@@ -54,7 +54,6 @@
             <template v-if="isAdmin">
               <router-link to="/admin">Quản lý đơn hàng</router-link>
               <router-link to="/admin/products">Quản lý sản phẩm</router-link>
-              <router-link to="/admin/accounts">Quản lý tài khoản</router-link>
               <div class="user-menu">
                 <span>{{ currentUser.name }}</span>
                 <button @click="handleLogout" class="btn btn-link">Đăng xuất</button>
@@ -92,7 +91,6 @@
       v-if="toast.show"
       :message="toast.message"
       :type="toast.type"
-      :id="toast.id"
       @close="hideToast"
     />
     <footer class="footer">
