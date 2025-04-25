@@ -11,7 +11,6 @@ import OrderHistory from '../views/user/OrderHistory.vue'
 import Admin from '../views/admin/Admin.vue'
 import AdminProducts from '../views/admin/AdminProducts.vue'
 import OrderManagement from '../views/admin/OrderManagement.vue'
-import AdminAccount from '../views/admin/AdminAccount.vue'
 
 // Auth views
 import Login from '../views/auth/Login.vue'
@@ -66,12 +65,6 @@ const routes = [
     path: '/admin/products',
     name: 'AdminProducts',
     component: AdminProducts,
-    meta: { requiresAdmin: true }
-  },
-  {
-    path: '/admin/accounts',
-    name: 'AdminAccount',
-    component: AdminAccount,
     meta: { requiresAdmin: true }
   },
   {

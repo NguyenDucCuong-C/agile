@@ -68,32 +68,14 @@ export default {
   methods: {
     increaseQuantity(item) {
       this.$store.commit('updateQuantity', { id: item.id, quantity: item.quantity + 1 })
-      this.$store.commit('showToast', {
-      message: `Đã tăng số lượng sản phẩm "${item.name}"`,
-      type: 'success',
-      duration: 3000,
-      id: Date.now()
-    })
     },
     decreaseQuantity(item) {
       if (item.quantity > 1) {
         this.$store.commit('updateQuantity', { id: item.id, quantity: item.quantity - 1 })
-        this.$store.commit('showToast', {
-        message: `Đã giảm số lượng sản phẩm "${item.name}"`,
-        type: 'info',
-        duration: 3000,
-        id: Date.now()
-      })
       }
     },
     removeFromCart(productId) {
       this.$store.commit('removeFromCart', productId)
-      this.$store.commit('showToast', {
-    message: 'Đã xóa sản phẩm khỏi giỏ hàng',
-    type: 'success',
-    duration: 3000,
-    id: Date.now() // id duy nhất mỗi lần
-  })
     },
     async checkout() {
       if (!this.isAuthenticated) {
